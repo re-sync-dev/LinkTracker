@@ -5,6 +5,9 @@
 /build/*
 !/build/.gitkeep
 
+*.rbxm*
+*.rbxmx*
+
 # Ignore these files
 *.lock
 sourcemap.json
