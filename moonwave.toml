@@ -10,7 +10,7 @@ onBrokenMarkdownLinks = "warn"
 # From git:
 url = "https://re-sync-dev.github.io"
 baseUrl = "/LinkTracker"
-tagline = "Allow developers to do more with their promotional content/material."
+tagline = "Allowing developers to do more with their promotional content/material."
 
 [navbar]
 title = ""
