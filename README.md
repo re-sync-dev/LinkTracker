@@ -1,7 +1,7 @@
 <p align="center" width="100%">
     <img width="33%" src="https://github.com/re-sync-dev/LinkTracker/blob/main/assets/icon.png?raw=true" alt="LinkTracker">
-	<h1>LinkTracker</h1>
-	<p>LinkTracker is a package that allows developers to do more with promotional content/material.</p>
+	<h1 class="text-align: center;">LinkTracker</h1>
+	<p class="text-align: center;">LinkTracker is a package that allows developers to do more with promotional content/material.</p>
 </p>
 
 
