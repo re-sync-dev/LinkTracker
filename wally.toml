@@ -1,0 +1,19 @@
+[package]
+name = "vyon/link-tracker"
+description = "LinkTracker is a package that allows developers to do more with promotional content/material."
+version = "1.0.0"
+registry = "https://github.com/UpliftGames/wally-index"
+license="MIT"
+realm = "shared"
+authors = ["Vyon (https://github.com/Vyon)"]
+
+exclude = ["**"]
+include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
+
+[dependencies]
+# Interface
+#Fusion = "elttob/fusion@0.2.0" # If you are using an example uncomment this line
+
+# Utility
+T = "osyrisrblx/t@3.0.0"
+HashLib = "boatbomber/hashlib@1.0.0"

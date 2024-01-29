@@ -1,0 +1,41 @@
+title = "LinkTracker"
+gitRepoUrl = "https://github.com/re-sync-dev/LinkTracker" # From Git
+gitSourceBranch = "main"
+
+[docusaurus]
+onBrokenLinks = "ignore"
+onBrokenMarkdownLinks = "warn"
+favicon = "/icon.png"
+
+# From git:
+url = "https://re-sync-dev.github.io"
+projectName = "LinkTracker"
+baseUrl = "/LinkTracker"
+tagline = "Allow developers to do more with their promotional content/material."
+
+[navbar]
+title = ""
+
+[navbar.logo]
+src = "/icon.png"
+alt = "LinkTracker"
+
+[home]
+enabled = true
+includeReadme = false
+
+[[home.features]]
+title = "Simple"
+description = "Simple and easy to understand API"
+
+[[home.features]]
+title = "Examples"
+description = "Comes with examples of how to use the package."
+
+[[home.features]]
+title = "Customizable"
+description = "Creating your own behavior with LinkTracker is incredibly easy and makes it simple to do what you want."
+
+[footer]
+style = "dark"
+copyright = "Copyright © 2023 Re-Sync. Built with Moonwave and Docusaurus"
