@@ -1,4 +1,6 @@
-![LinkTracker](https://github.com/re-sync-dev/LinkTracker/blob/main/assets/icon.png?raw=true)
+<p align="center" width="100%">
+    <img width="33%" src="https://github.com/re-sync-dev/LinkTracker/blob/main/assets/icon.png?raw=true" alt="LinkTracker"> 
+</p>
 
 # LinkTracker
 LinkTracker is a package that allows developers to do more with promotional content/material.
