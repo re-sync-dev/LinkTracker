@@ -1,9 +1,9 @@
 <p align="center" width="100%">
-    <img width="33%" src="https://github.com/re-sync-dev/LinkTracker/blob/main/assets/icon.png?raw=true" alt="LinkTracker"> 
+    <img width="33%" src="https://github.com/re-sync-dev/LinkTracker/blob/main/assets/icon.png?raw=true" alt="LinkTracker">
+	<h1>LinkTracker</h1>
+	<p>LinkTracker is a package that allows developers to do more with promotional content/material.</p>
 </p>
 
-# LinkTracker
-LinkTracker is a package that allows developers to do more with promotional content/material.
 
 ## Style Guide
 For further information about styling see [STYLING.md](STYLING.md).

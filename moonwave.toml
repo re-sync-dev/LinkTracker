@@ -3,13 +3,12 @@ gitRepoUrl = "https://github.com/re-sync-dev/LinkTracker" # From Git
 gitSourceBranch = "main"
 
 [docusaurus]
+favicon = "/icon.png"
 onBrokenLinks = "ignore"
 onBrokenMarkdownLinks = "warn"
-favicon = "/icon.png"
 
 # From git:
 url = "https://re-sync-dev.github.io"
-projectName = "LinkTracker"
 baseUrl = "/LinkTracker"
 tagline = "Allow developers to do more with their promotional content/material."
 
