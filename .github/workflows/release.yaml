@@ -37,7 +37,7 @@ jobs:
 
                   cd ./temp/examples
                   zip Examples.zip *.rbxl
-                  mv ../..
+                  mv ./Examples.zip ../..
                   cd ../..
 
             - uses: "marvinpinto/action-automatic-releases@latest"
