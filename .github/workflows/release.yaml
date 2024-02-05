@@ -20,7 +20,7 @@ jobs:
 
             - name: "Build"
               run: |
-                  mkdir release
+                  mkdir temp/examples
 
                   for dir in ./examples/*/
                   do
@@ -28,13 +28,13 @@ jobs:
                       name=${dir##*/}
 
                       wally install --project-path=${dir}
-                      rojo build ${dir} -o ./release/${name}.rbxl
+                      rojo build ${dir} -o ./temp/examples/${name}.rbxl
                   done
 
                   wally install
-                  rojo build -o LinkTracker.rbxm
+                  rojo build build.project.json -o LinkTracker.rbxm
 
-                  zip -r Examples.zip release
+                  zip -r Examples.zip ./temp/examples
 
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:

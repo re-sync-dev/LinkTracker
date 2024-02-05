@@ -1,0 +1,32 @@
+{
+	"name": "LinkTracker Dev",
+	"tree": {
+		"$className": "DataModel",
+
+		"ServerScriptService": {
+			"Server": {
+				"$path": "src/server"
+			}
+		},
+
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"Client": {
+					"$path": "src/client"
+				}
+			}
+		},
+
+		"ReplicatedStorage": {
+			"Packages": {
+				"$path": "Packages",
+				"LinkTracker": {
+					"$path": "../default.project.json",
+					"Packages": {
+						"$path": "../Packages"
+					}
+				}
+			}
+		}
+	}
+}

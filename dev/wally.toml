@@ -1,5 +1,5 @@
 [package]
-name = "vyon/link-tracker-example"
+name = "vyon/link-tracker-dev"
 description = "LinkTracker is a package that allows developers to do more with promotional content/material."
 version = "1.0.0"
 registry = "https://github.com/UpliftGames/wally-index"

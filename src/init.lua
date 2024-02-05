@@ -13,11 +13,13 @@
 -- Services:
 local RunService = game:GetService("RunService")
 local DataStoreService = game:GetService("DataStoreService")
-local MemoryStoreService = game:GetService("MemoryStoreService")
+
+-- Folders:
+local Packages = script:FindFirstChild("Packages") or script.Parent
 
 -- Modules:
-local HashLib = require(script.Parent.HashLib)
-local T = require(script.Parent.T)
+local T = require(Packages.T)
+local HashLib = require(Packages.HashLib)
 local Types = require(script.Types)
 
 -- Types:
@@ -26,18 +28,18 @@ export type LinkData = Types.LinkData
 export type CallbackOptions<T> = Types.CallbackOptions<T>
 
 -- Constants:
-local DEFAULT_EXPIRY = 60 * 60 * 24 * 7 --> 1 week
 local STORE_NAME = "DeepLinkData"
+local LINKS_STORE_NAME = "LinkExpirationData"
 local IS_SERVER = RunService:IsServer()
 local DEAD_FUNCTION = function(...) end
 
 -- Variables:
-local _, MemoryStore = pcall(function()
-	return MemoryStoreService:GetSortedMap(STORE_NAME)
-end)
-
 local _, DataStore = pcall(function()
 	return DataStoreService:GetDataStore(STORE_NAME)
+end)
+
+local _, LinkDataStore = pcall(function()
+	return DataStoreService:GetOrderedDataStore(LINKS_STORE_NAME)
 end)
 
 --[=[
@@ -71,12 +73,13 @@ end
 	@param Key string
 	@param LinkData LinkData
 ]=]
+--https://www.roblox.com/games/start?launchData=561b2176c159130e978dbdc69614f97affea1433&placeId=16252000035
 function LinkTracker._StoreLinkData(Key: string, LinkData: LinkData)
-	if LinkData.Expires or not DataStore then
-		MemoryStore:SetAsync(Key, LinkData, LinkData.Expires or DEFAULT_EXPIRY)
-	else
-		DataStore:SetAsync(Key, LinkData)
+	if LinkData.Expires then
+		LinkDataStore:SetAsync(Key, os.time() + LinkData.Expires) --> Link expiration is set relative to the current time.
 	end
+
+	DataStore:SetAsync(Key, LinkData)
 end
 
 --[=[
@@ -168,15 +171,12 @@ end
 	@return string
 ]=]
 function LinkTracker:DeleteLink(LinkKey: string)
-	MemoryStore:RemoveAsync(LinkKey)
-
-	if DataStore then
-		-- As far as I know all DataStore requests need to be wrapped
-		-- in a pcall to prevent random errors from occuring.
-		pcall(function()
-			DataStore:RemoveAsync(LinkKey)
-		end)
-	end
+	-- As far as I know all DataStore requests need to be wrapped
+	-- in a pcall to prevent random errors from occuring.
+	pcall(function()
+		LinkDataStore:RemoveAsync(LinkKey)
+		DataStore:RemoveAsync(LinkKey)
+	end)
 end
 
 --[=[
@@ -188,14 +188,8 @@ end
 	@return LinkData?
 ]=]
 function LinkTracker:GetLinkData(LinkKey: string): LinkData?
-	-- NOTE: MemoryStore:GetAsync will not work within specific game contexts.
-	-- When generating a link in studio, MemoryStoreService will put the saved value
-	-- into what I believe to be a 'Studio' context.
-
-	-- BUG: Remove usage of MemoryStoreService in favor of DataStoreService
-	-- to prevent the above issue from occuring.
 	local _, LinkData: LinkData? = pcall(function()
-		return MemoryStore and MemoryStore:GetAsync(LinkKey) or (DataStore and DataStore:GetAsync(LinkKey))
+		return DataStore:GetAsync(LinkKey)
 	end)
 
 	return LinkData
@@ -269,10 +263,42 @@ function LinkTracker:OnJoin<T>(Player: Player, CallbackOptions: CallbackOptions<
 end
 
 -- Main:
-assert(MemoryStore, "[LinkTracker]: In order for LinkTracker to work, the current place must be published.")
+if not DataStore or not LinkDataStore then
+	error("[LinkTracker]: DataStoreService is not available please enable Studio Access to API Services.")
+end
 
-if not DataStore then
-	warn("[LinkTracker]: DataStoreService is not available, link data will be stored in memory only.")
+local Success, Result = pcall(function()
+	local Pages = LinkDataStore:GetSortedAsync(true, 100)
+
+	local KeysToDelete = {}
+
+	local function Search(Page: { { key: string, value: any } })
+		for _, Data in Page do
+			if Data.value > os.time() then
+				continue
+			end
+
+			table.insert(KeysToDelete, Data.key)
+		end
+	end
+
+	Search(Pages:GetCurrentPage())
+
+	while not Pages.IsFinished do
+		Pages:AdvanceToNextPageAsync()
+
+		Search(Pages:GetCurrentPage())
+
+		task.wait()
+	end
+
+	for _, Key in KeysToDelete do
+		LinkDataStore:RemoveAsync(Key)
+	end
+end)
+
+if not Success then
+	warn(Result)
 end
 
 return LinkTracker
