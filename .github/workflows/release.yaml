@@ -22,7 +22,7 @@ jobs:
               run: |
                   mkdir release
 
-                  for dir in /examples/*/
+                  for dir in ./examples/*/
                   do
                       name=${dir##*/}
                       dir=${dir%*/}
