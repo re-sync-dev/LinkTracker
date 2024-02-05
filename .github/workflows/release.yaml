@@ -1,0 +1,46 @@
+name: "tagged-release"
+
+on:
+    push:
+        branches:
+            - "main"
+jobs:
+    tagged-release:
+        name: "Tagged Release"
+        runs-on: "ubuntu-latest"
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - uses: ok-nick/setup-aftman@v0.4.2
+              name: Setup Aftman
+              with:
+                  token: ${{ github.token }}
+
+            - name: "Build"
+              run: |
+                  mkdir release
+
+                  for dir in /examples/*/
+                  do
+                      name=${dir##*/}
+                      dir=${dir%*/}
+                      wally install --project-path=${dir}
+                      rojo build ${dir} -o ./release/${name}.rbxl
+                  done
+
+                  wally install
+                  rojo build -o LinkTracker.rbxm
+
+                  zip -r Examples.zip release
+
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  prerelease: false
+                  automatic_release_tag: "latest"
+                  files: |
+                      LinkTracker.rbxm
+                      Examples.zip
+                      LICENSE

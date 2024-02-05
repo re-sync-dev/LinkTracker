@@ -1,6 +1,9 @@
 {
 	"name": "LinkTracker",
 	"tree": {
-		"$path": "src/package"
+		"$path": "src/package",
+		"Packages": {
+			"$path": "Packages"
+		}
 	}
 }

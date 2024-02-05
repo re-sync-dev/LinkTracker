@@ -34,6 +34,13 @@ local RateLimit = {}
 -- Functions:
 local function OnPlayerAdded(Player: Player)
 	LinkTracker:OnJoin(Player, {
+		NoLink = function(Player: Player)
+			if Player.UserId == game.CreatorId then
+				return
+			end
+
+			Player:Kick("The link you joined from is invalid.")
+		end,
 		InvalidLink = function(Player: Player)
 			if Player.UserId == game.CreatorId then
 				return

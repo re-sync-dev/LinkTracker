@@ -14,11 +14,10 @@
 local RunService = game:GetService("RunService")
 local DataStoreService = game:GetService("DataStoreService")
 local MemoryStoreService = game:GetService("MemoryStoreService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Modules:
-local HashLib = require(ReplicatedStorage.Packages.HashLib)
-local T = require(ReplicatedStorage.Packages.T)
+local HashLib = require(script:FindFirstAncestor("Packages").HashLib)
+local T = require(script:FindFirstAncestor("Packages").T)
 local Types = require(script.Types)
 
 -- Types:
@@ -119,7 +118,7 @@ function LinkTracker:GenerateLink(Options: GeneratorOptions)
 				Uses = T.optional(T.number),
 				Expires = T.optional(T.number),
 			})),
-			Promo = T.optional(T.boolean),
+			IsPromo = T.optional(T.boolean),
 			Custom = T.optional(T.table),
 		})(Options),
 		"[LinkTracker]: Provided options do not match the expected type."
@@ -146,7 +145,7 @@ function LinkTracker:GenerateLink(Options: GeneratorOptions)
 		Referrer = Referrer,
 		RemainingUses = Uses,
 		Expires = Expires,
-		Item = IsPromo,
+		IsPromo = IsPromo,
 	}
 
 	local CustomData = Options.Custom or {} :: { [string]: any }
@@ -234,7 +233,9 @@ function LinkTracker:OnJoin<T>(Player: Player, CallbackOptions: CallbackOptions<
 	local UsableLink = Callbacks.UsableLink
 	local ConsumeLink = Callbacks.ConsumeLink or DEAD_FUNCTION
 
-	if not LaunchData then
+	print(LaunchData)
+
+	if not LaunchData or LaunchData == "" then
 		NoLink(Player)
 		return
 	end
@@ -246,15 +247,13 @@ function LinkTracker:OnJoin<T>(Player: Player, CallbackOptions: CallbackOptions<
 		return
 	end
 
-	local Success = pcall(UsableLink or function()
+	local Success: boolean, Result = pcall(UsableLink or function()
 		return true
 	end, Player, LinkData)
 
 	if not Success then
 		warn("[LinkTracker]: An error occured while running the 'UsableLink' callback.")
-	end
-
-	if not Success then
+		print(Result)
 		return
 	end
 

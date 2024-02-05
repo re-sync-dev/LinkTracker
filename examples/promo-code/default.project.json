@@ -1,0 +1,25 @@
+{
+	"name": "LinkTracker Example-PromoCode",
+	"tree": {
+		"$className": "DataModel",
+		"ServerScriptService": {
+			"Server": {
+				"$path": "src/server"
+			}
+		},
+
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"Client": {
+					"$path": "src/client"
+				}
+			}
+		},
+
+		"ReplicatedStorage": {
+			"Packages": {
+				"$path": "Packages"
+			}
+		}
+	}
+}
