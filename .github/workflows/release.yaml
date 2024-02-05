@@ -35,7 +35,10 @@ jobs:
                   wally install
                   rojo build build.project.json -o LinkTracker.rbxm
 
-                  zip -r Examples.zip ./temp/examples
+                  cd ./temp/examples
+                  zip Examples.zip *.rbxl
+                  mv ../..
+                  cd ../..
 
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
