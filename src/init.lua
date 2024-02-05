@@ -16,8 +16,8 @@ local DataStoreService = game:GetService("DataStoreService")
 local MemoryStoreService = game:GetService("MemoryStoreService")
 
 -- Modules:
-local HashLib = require(script:FindFirstAncestor("Packages").HashLib)
-local T = require(script:FindFirstAncestor("Packages").T)
+local HashLib = require(script.Parent.HashLib)
+local T = require(script.Parent.T)
 local Types = require(script.Types)
 
 -- Types:
