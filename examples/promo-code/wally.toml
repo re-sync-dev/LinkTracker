@@ -11,7 +11,7 @@ exclude = ["**"]
 include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
 
 [dependencies]
-LinkTracker = "vyon/link-tracker@1.1.1"
+LinkTracker = "vyon/link-tracker@1.1.3"
 
 # Interface
 Fusion = "elttob/fusion@0.2.0"

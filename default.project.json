@@ -1,5 +1,5 @@
 {
-	"name": "LinkTracker",
+	"name": "link-tracker",
 	"tree": {
 		"$path": "src/package",
 		"Packages": {
