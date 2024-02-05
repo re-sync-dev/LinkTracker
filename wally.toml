@@ -1,14 +1,14 @@
 [package]
 name = "vyon/link-tracker"
 description = "LinkTracker is a package that allows developers to do more with promotional content/material."
-version = "1.1.0"
+version = "1.1.1"
 registry = "https://github.com/UpliftGames/wally-index"
-license="MIT"
+license = "MIT"
 realm = "shared"
 authors = ["Vyon (https://github.com/Vyon)"]
 
 exclude = ["**"]
-include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
+include = ["src", "src/*", "wally.lock", "wally.toml"]
 
 [dependencies]
 # Utility

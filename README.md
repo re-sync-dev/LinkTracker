@@ -1,6 +1,6 @@
-<div align="center" width="100%" display="flex" class="flex-direction: column;">
+<div align="center" width="100%">
     <img width="256" src="https://github.com/re-sync-dev/LinkTracker/blob/main/assets/icon.png?raw=true" alt="LinkTracker">
-	<b class="text-align: center;">Allowing developers to do more with promotional content/material.</b>
+	<p class="text-align: center;">Allowing developers to do more with promotional content/material.</p>
 </div>
 
 ## Style Guide
