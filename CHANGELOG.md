@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.1.0
 - Updated the PromoCode, CreatorCode, and InviteTester examples.
 - Updated LinkTracker docs to be more clear
   - Modified intro page / about
