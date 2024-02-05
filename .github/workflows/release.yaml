@@ -26,6 +26,9 @@ jobs:
                   do
                       name=${dir##*/}
                       dir=${dir%*/}
+                      echo ${dir}
+                      echo ${name}
+
                       wally install --project-path=${dir}
                       rojo build ${dir} -o ./release/${name}.rbxl
                   done

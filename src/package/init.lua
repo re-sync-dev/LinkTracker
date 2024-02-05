@@ -233,14 +233,12 @@ function LinkTracker:OnJoin<T>(Player: Player, CallbackOptions: CallbackOptions<
 	local UsableLink = Callbacks.UsableLink
 	local ConsumeLink = Callbacks.ConsumeLink or DEAD_FUNCTION
 
-	print(LaunchData)
-
 	if not LaunchData or LaunchData == "" then
 		NoLink(Player)
 		return
 	end
 
-	local LinkData: LinkData = self:GetLinkData(LaunchData)
+	local LinkData: LinkData = self:GetLinkData(LaunchData :: string)
 
 	if not LinkData then
 		InvalidLink(Player)
@@ -264,9 +262,9 @@ function LinkTracker:OnJoin<T>(Player: Player, CallbackOptions: CallbackOptions<
 	LinkData.RemainingUses -= 1
 
 	if LinkData.RemainingUses == 0 then
-		LinkTracker:DeleteLink(LaunchData)
+		LinkTracker:DeleteLink(LaunchData :: string)
 	else
-		LinkTracker:SetLinkData(LaunchData, LinkData)
+		LinkTracker:SetLinkData(LaunchData :: string, LinkData)
 	end
 end
 
