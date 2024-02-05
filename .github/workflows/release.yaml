@@ -24,10 +24,8 @@ jobs:
 
                   for dir in ./examples/*/
                   do
-                      name=${dir##*/}
                       dir=${dir%*/}
-                      echo ${dir}
-                      echo ${name}
+                      name=${dir##*/}
 
                       wally install --project-path=${dir}
                       rojo build ${dir} -o ./release/${name}.rbxl
