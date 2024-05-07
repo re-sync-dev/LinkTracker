@@ -17,8 +17,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 -- Modules:
 local LinkTracker = require(ReplicatedStorage.Packages.LinkTracker)
 
-type Shiz = LinkTracker.
-
 -- Types:
 type LinkData = LinkTracker.LinkData
 type CustomLinkData = LinkData & {
