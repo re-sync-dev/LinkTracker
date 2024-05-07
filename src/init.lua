@@ -18,11 +18,13 @@ local DataStoreService = game:GetService("DataStoreService")
 local Packages = script:FindFirstChild("Packages") or script.Parent
 
 -- Modules:
-local T = require(Packages.T)
-local HashLib = require(Packages.HashLib)
 local Types = require(script.Types)
 
+local T = require(Packages.T)
+local HashLib = require(Packages.HashLib)
+
 -- Types:
+-- Public:
 export type GeneratorOptions = Types.GeneratorOptions
 export type LinkData = Types.LinkData
 export type CallbackOptions<T> = Types.CallbackOptions<T>
@@ -73,7 +75,6 @@ end
 	@param Key string
 	@param LinkData LinkData
 ]=]
---https://www.roblox.com/games/start?launchData=561b2176c159130e978dbdc69614f97affea1433&placeId=16252000035
 function LinkTracker._StoreLinkData(Key: string, LinkData: LinkData)
 	if LinkData.Expires then
 		LinkDataStore:SetAsync(Key, os.time() + LinkData.Expires) --> Link expiration is set relative to the current time.

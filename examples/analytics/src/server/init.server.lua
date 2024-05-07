@@ -12,17 +12,21 @@
 
 -- Services:
 local Players = game:GetService("Players")
+local DataStoreService = game:GetService("DataStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Modules:
 local LinkTracker = require(ReplicatedStorage.Packages.LinkTracker)
 
-type Shiz = LinkTracker.
-
 -- Types:
 type LinkData = LinkTracker.LinkData
 type CustomLinkData = LinkData & {
-	AllowedUsers: { number },
+	AlreadyUsed: { number },
+}
+
+-- Constants:
+local USERS_ALLOWED_TO_CREATE_LINKS = {
+	2394560147, --> VyonEXE (Me)
 }
 
 -- Locals:
@@ -31,30 +35,14 @@ CreateLink.Name = "CreateLink"
 CreateLink.Parent = ReplicatedStorage
 
 -- Variables:
+local ExampleDataStore = DataStoreService:GetDataStore("ExampleDataStore")
 local RateLimit = {}
 
 -- Functions:
 local function OnPlayerAdded(Player: Player)
 	LinkTracker:OnJoin(Player, {
-		NoLink = function(Player: Player)
-			if Player.UserId == game.CreatorId then
-				return
-			end
-
-			Player:Kick("The link you joined from is invalid.")
-		end,
-		InvalidLink = function(Player: Player)
-			if Player.UserId == game.CreatorId then
-				return
-			end
-
-			Player:Kick("The link you joined from is invalid.")
-		end,
-
 		UsableLink = function(Player: Player, LinkData: CustomLinkData)
-			local Index = table.find(LinkData.AllowedUsers, Player.UserId)
-
-			if not Index then
+			if table.find(LinkData.AlreadyUsed, Player.UserId) then --> Player has already used this link.
 				return false
 			end
 
@@ -62,16 +50,29 @@ local function OnPlayerAdded(Player: Player)
 		end,
 
 		ConsumeLink = function(Player: Player, LinkData: CustomLinkData)
-			local Index = table.find(LinkData.AllowedUsers, Player.UserId)
+			local ReferrerId = LinkData.Referrer
+			local Referrer = Players:GetNameFromUserIdAsync(LinkData.Referrer)
 
-			if not Index then
+			print(`[LinkTracker]: {Player.Name} joined from {Referrer}'s link.`)
+			table.insert(LinkData.AlreadyUsed, Player.UserId)
+
+			local Key = `{ReferrerId}Referrals`
+
+			local Success, Referrals = ExampleDataStore:GetAsync(Key)
+
+			if not Success then
+				error(`Failed to update referrals for referrer '{Referrer}' ({ReferrerId})`)
+			end
+
+			if table.find(Referrals, Player.UserId) then
 				return
 			end
 
-			table.remove(LinkData.AllowedUsers, Index)
+			table.insert(Referrals, Player.UserId)
 
-			local Referrer = Players:GetNameFromUserIdAsync(LinkData.Referrer)
-			print(`[LinkTracker]: {Player.Name} joined from {Referrer}'s link.`)
+			ExampleDataStore:SetAsync(Key, Referrals)
+
+			print(`Referrer '{Referrer}' ({ReferrerId}) now has {#Referrals} referrals!`)
 		end,
 	})
 end
@@ -85,7 +86,12 @@ end
 Players.PlayerAdded:Connect(OnPlayerAdded)
 
 -- Binds:
-CreateLink.OnServerInvoke = function(Player: Player, UserIds: { number }): string?
+CreateLink.OnServerInvoke = function(Player: Player, UserId: string): string?
+	-- Sanity check to make sure exploiters / people who shouldn't be creating links can't.
+	if not table.find(USERS_ALLOWED_TO_CREATE_LINKS, Player.UserId) then
+		return
+	end
+
 	if table.find(RateLimit, Player.UserId) then
 		return
 	end
@@ -98,14 +104,13 @@ CreateLink.OnServerInvoke = function(Player: Player, UserIds: { number }): strin
 
 	local Link = LinkTracker:GenerateLink({
 		Secret = tostring(tick()),
-		Referrer = Player.UserId,
+		Referrer = UserId,
 		Limited = {
-			Uses = #UserIds,
-			Expires = 60,
+			Expires = 60 * 60 * 24 * 7, --> 1 week
 		},
 
 		Custom = {
-			AllowedUsers = UserIds,
+			AlreadyUsed = {},
 		},
 	})
 

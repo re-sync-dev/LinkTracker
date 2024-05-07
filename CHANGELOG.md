@@ -1,3 +1,8 @@
+## 1.2.1
+- Slight code cleanup for the main package
+- Added analytics example (pretty much the same as the creator-code example.)
+- Changed `link-tracker` -> `linktracker` for ease of access
+
 ## 1.2.0
 - Updated the examples to always use the latest version of LinkTracker
 - Fixed temporary links not being transferable between studio and in game

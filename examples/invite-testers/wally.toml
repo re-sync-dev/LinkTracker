@@ -1,5 +1,5 @@
 [package]
-name = "vyon/link-tracker-example"
+name = "vyon/linktracker-example"
 description = "LinkTracker is a package that allows developers to do more with promotional content/material."
 version = "1.0.0"
 registry = "https://github.com/UpliftGames/wally-index"
@@ -11,7 +11,7 @@ exclude = ["**"]
 include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
 
 [dependencies]
-LinkTracker = "vyon/link-tracker@^1"
+LinkTracker = "vyon/linktracker@^1"
 
 # Interface
 Fusion = "elttob/fusion@0.2.0"

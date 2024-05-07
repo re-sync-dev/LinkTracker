@@ -12,7 +12,7 @@ Wally is typically used in a Rojo based workflow and is used to manage install p
 
 ## Installation
 ### Step 1
-After downloading / installing Aftman, Rojo, and Wally head over to LinkTracker's [wally page](https://wally.run/package/vyon/link-tracker).
+After downloading / installing Aftman, Rojo, and Wally head over to LinkTracker's [wally page](https://wally.run/package/vyon/linktracker).
 
 You should see a gray-ish box as seen here
 ![Step 1](/wally/1.png)
