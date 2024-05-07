@@ -5,10 +5,6 @@ sidebar_position: 1
 # About
 LinkTracker is a tool that as you may have guessed allows developers to track the links that players join through. LinkTracker can be implemented in quite a few ways and if you are interested in some use cases you can download [examples](https://github.com/re-sync-dev/LinkTracker/releases) from the releases page.
 
-:::warning Temporary Links
-As of v1.0.0 temporary links that are created in studio will not transfer over to the game.
-:::
-
 ## Why use LinkTracker?
 ### Analytics
 Using LinkTracker can help you understand where your audience comes from whether that be [Twitter](https://twitter.com/), [TikTok](https://tiktok.com/) or even a [Discord](https://discord.com/) server.
